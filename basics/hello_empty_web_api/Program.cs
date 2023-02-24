@@ -10,4 +10,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+//* Controllers Should be Mapped
+app.MapControllers();
+
 app.Run();
