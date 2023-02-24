@@ -7,8 +7,18 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+// for running with https and Production Mode
+//* dotnet run --project hello_empty_web_api/ --launch-profile https
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
 
 //* Controllers Should be Mapped
 app.MapControllers();
