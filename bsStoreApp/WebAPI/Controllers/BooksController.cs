@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Dtos;
-using WebAPI.Models;
 using WebAPI.Repositories;
 
 namespace WebAPI.Controllers;
