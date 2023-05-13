@@ -6,15 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Repositories.Contracts;
 using Repositories.EFCore;
 
+using Services.Contracts;
+
 namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 public class BooksController : ControllerBase
 {
-    private readonly IRepositoryManager _manager;
+    private readonly IServiceManager _manager;
 
-    public BooksController(IRepositoryManager manager)
+    public BooksController(IServiceManager manager)
     {
         _manager = manager;
     }
@@ -22,16 +24,19 @@ public class BooksController : ControllerBase
     [HttpGet]
     public IActionResult GetAllBooks()
     {
-        return Ok(_manager.Book.GetAllBooks(false));
+        return Ok(_manager.BookService.GetAllBooks(false));
+    }
+
+    [HttpPost]
+    public IActionResult CreateOneBook([FromBody] Book book)
+    {
+        return StatusCode(201, _manager.BookService.CreateOneBook(book));
     }
 
     [HttpGet("{id}")]
     public IActionResult GetOneBook([FromRoute] int id)
     {
-        var book = _manager.Book.GetBookById(id, false);
-        _manager.Save();
-
-        if (book is null) return NotFound();
+        var book = _manager.BookService.GetOneBookById(id, false);
 
         return Ok(book);
     }
@@ -39,31 +44,15 @@ public class BooksController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult UpdateOneBook([FromRoute] int id, [FromBody] Book book)
     {
-        var entity = _manager.Book.GetBookById(id, true);
+        _manager.BookService.UpdateOneBook(id, book, true);
 
-        if (entity is null) return NotFound();
-
-        if (id != book.Id) return BadRequest();
-
-        entity.Title = book.Title;
-        entity.Price = book.Price;
-
-        // _manager.Book.UpdateOneBook(entity); // not used in course ??
-        _manager.Save();
-
-        return Ok(book);
+        return NoContent();
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteOneBook([FromRoute] int id)
     {
-        var entity = _manager.Book.GetBookById(id, false);
-
-        if (entity is null) return NotFound();
-
-        _manager.Book.DeleteOneBook(entity);
-        _manager.Save();
-
+        _manager.BookService.DeleteOneBook(id, false);
         return NoContent();
     }
 
@@ -71,13 +60,11 @@ public class BooksController : ControllerBase
     public IActionResult PartiallyUpdateOneBook([FromRoute] int id,
         [FromBody] JsonPatchDocument<Book> bookPatch)
     {
-        var entity = _manager.Book.GetBookById(id, true);
-
-        if (entity is null) return NotFound();
+        var entity = _manager.BookService.GetOneBookById(id, true);
 
         bookPatch.ApplyTo(entity);
-        _manager.Book.Update(entity);
+        _manager.BookService.UpdateOneBook(id, entity, true);
 
-        return Ok();
+        return NoContent();
     }
 }
