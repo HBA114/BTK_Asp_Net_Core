@@ -3,12 +3,9 @@ using Entities.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
-using Repositories.Contracts;
-using Repositories.EFCore;
-
 using Services.Contracts;
 
-namespace WebAPI.Controllers;
+namespace Presentation.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
