@@ -9,10 +9,12 @@ namespace Services;
 public class BookManager : IBookService
 {
     private readonly IRepositoryManager _manager;
+    private readonly ILoggerService _loggerService;
 
-    public BookManager(IRepositoryManager manager)
+    public BookManager(IRepositoryManager manager, ILoggerService loggerService)
     {
         _manager = manager;
+        _loggerService = loggerService;
     }
 
     public Book CreateOneBook(Book book)
@@ -24,8 +26,8 @@ public class BookManager : IBookService
 
     public void DeleteOneBook(int id, bool trackChanges)
     {
-        var entity = _manager.Book.GetBookById(id, trackChanges);
-        if (entity is null) throw new Exception($"Book with id : {id} not found!");
+        var entity = GetOneBookById(id, trackChanges);
+
         _manager.Book.DeleteOneBook(entity);
         _manager.Save();
     }
@@ -38,22 +40,23 @@ public class BookManager : IBookService
     public Book GetOneBookById(int id, bool trackChanges)
     {
         var entity = _manager.Book.GetBookById(id, trackChanges);
-        if (entity is null) throw new Exception($"Book with id : {id} not found!");
+        if (entity is null)
+        {
+            _loggerService.LogWarning($"Book with id : {id} not found!");
+            throw new Exception($"Book with id : {id} not found!");
+        }
+
         return entity;
     }
 
     public void UpdateOneBook(int id, Book book, bool trackChanges)
     {
-        var entity = _manager.Book.GetBookById(id, trackChanges);
-        if (entity is null) throw new Exception($"Book with id : {id} not found!");
-
-        // check params
-        if (book is null) throw new ArgumentNullException(nameof(book));
+        var entity = GetOneBookById(id, trackChanges);
 
         entity.Title = book.Title;
         entity.Price = book.Price;
 
-        _manager.Book.UpdateOneBook(entity);    // if entity tracking is true, save will update without needing this line
+        _manager.Book.UpdateOneBook(entity); // if entity tracking is true, save will update without needing this line
         _manager.Save();
     }
 }
