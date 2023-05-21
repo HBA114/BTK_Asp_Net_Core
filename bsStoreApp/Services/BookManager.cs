@@ -45,7 +45,7 @@ public class BookManager : IBookService
         {
             string message = $"Book with id : {id} not found!";
             _loggerService.LogWarning(message);
-            throw new BookNotFound(id);
+            throw new BookNotFoundException(id);
         }
 
         return entity;
