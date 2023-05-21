@@ -42,8 +42,9 @@ public class BookManager : IBookService
         var entity = _manager.Book.GetBookById(id, trackChanges);
         if (entity is null)
         {
-            _loggerService.LogWarning($"Book with id : {id} not found!");
-            throw new Exception($"Book with id : {id} not found!");
+            string message = $"Book with id : {id} not found!";
+            _loggerService.LogWarning(message);
+            throw new Exception(message);
         }
 
         return entity;
