@@ -18,3 +18,26 @@
 2023-05-21 16:47:49.7785 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=/home/hbasri/Documents/Programming/dotnet-Projects/BTK_Asp_Net_Core/bsStoreApp/WebAPI/nlog.config
 2023-05-21 16:48:03.1212 Info AppDomain Shutting down. LogFactory closing...
 2023-05-21 16:48:03.1304 Info LogFactory has been closed.
+2023-05-21 17:20:26.7537 Info Message Template Auto Format enabled
+2023-05-21 17:20:26.8240 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-05-21 17:20:26.8479 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=/home/hbasri/Documents/Programming/dotnet-Projects/BTK_Asp_Net_Core/bsStoreApp/WebAPI/nlog.config
+2023-05-21 17:21:23.7896 Info AppDomain Shutting down. LogFactory closing...
+2023-05-21 17:21:23.7982 Info LogFactory has been closed.
+2023-05-21 17:22:00.2986 Info Message Template Auto Format enabled
+2023-05-21 17:22:00.3789 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-05-21 17:22:00.4195 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=/home/hbasri/Documents/Programming/dotnet-Projects/BTK_Asp_Net_Core/bsStoreApp/WebAPI/nlog.config
+2023-05-21 17:23:39.8862 Info AppDomain Shutting down. LogFactory closing...
+2023-05-21 17:23:39.8982 Info LogFactory has been closed.
+2023-05-21 17:23:50.7794 Info Message Template Auto Format enabled
+2023-05-21 17:23:50.9524 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-05-21 17:23:50.9866 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=/home/hbasri/Documents/Programming/dotnet-Projects/BTK_Asp_Net_Core/bsStoreApp/WebAPI/nlog.config
+2023-05-21 17:26:16.6586 Info Message Template Auto Format enabled
+2023-05-21 17:26:16.7232 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-05-21 17:26:16.7482 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=/home/hbasri/Documents/Programming/dotnet-Projects/BTK_Asp_Net_Core/bsStoreApp/WebAPI/nlog.config
+2023-05-21 17:27:31.8273 Info AppDomain Shutting down. LogFactory closing...
+2023-05-21 17:27:31.8394 Info LogFactory has been closed.
+2023-05-21 17:44:23.7639 Info Message Template Auto Format enabled
+2023-05-21 17:44:23.8228 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-05-21 17:44:23.8454 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=/home/hbasri/Documents/Programming/dotnet-Projects/BTK_Asp_Net_Core/bsStoreApp/WebAPI/nlog.config
+2023-05-21 17:44:42.1713 Info AppDomain Shutting down. LogFactory closing...
+2023-05-21 17:44:42.1814 Info LogFactory has been closed.

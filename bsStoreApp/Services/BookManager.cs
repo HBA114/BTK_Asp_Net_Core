@@ -1,3 +1,4 @@
+using Entities.Exceptions;
 using Entities.Models;
 
 using Repositories.Contracts;
@@ -44,7 +45,7 @@ public class BookManager : IBookService
         {
             string message = $"Book with id : {id} not found!";
             _loggerService.LogWarning(message);
-            throw new Exception(message);
+            throw new BookNotFound(id);
         }
 
         return entity;

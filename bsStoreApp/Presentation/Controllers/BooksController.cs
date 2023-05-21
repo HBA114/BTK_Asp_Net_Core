@@ -50,6 +50,7 @@ public class BooksController : ControllerBase
     public IActionResult DeleteOneBook([FromRoute] int id)
     {
         _manager.BookService.DeleteOneBook(id, false);
+
         return NoContent();
     }
 
