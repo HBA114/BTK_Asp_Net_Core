@@ -1,5 +1,7 @@
 using Entities.Models;
+
 using Microsoft.EntityFrameworkCore;
+
 using Repositories.EFCore.Config;
 
 namespace Repositories.EFCore;

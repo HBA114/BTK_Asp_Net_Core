@@ -14,9 +14,9 @@ public class BookRepository : RepositoryBase<Book>, IBookRepository
 
     public void DeleteOneBook(Book book) => Delete(book);
 
-    public IQueryable<Book> GetAllBooks(bool trackChanges) => 
+    public IQueryable<Book> GetAllBooks(bool trackChanges) =>
         FindAll(trackChanges).OrderBy(b => b.Id);
-    public Book? GetBookById(int id, bool trackChanges) => 
+    public Book? GetBookById(int id, bool trackChanges) =>
         FindByCondition(x => x.Id.Equals(id), trackChanges).SingleOrDefault();
 
     public void UpdateOneBook(Book book) => Update(book);

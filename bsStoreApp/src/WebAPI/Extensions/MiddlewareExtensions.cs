@@ -1,5 +1,3 @@
-using System.Net;
-
 using Entities.ErrorModel;
 using Entities.Exceptions;
 
