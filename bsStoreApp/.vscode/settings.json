@@ -18,5 +18,6 @@
         "Hsts",
         "Newtonsoft",
         "nlog"
-    ]
+    ],
+    "dotnet-test-explorer.testProjectPath": "./tests/*Test*"
 }
