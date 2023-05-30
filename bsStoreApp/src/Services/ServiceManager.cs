@@ -10,7 +10,7 @@ public class ServiceManager : IServiceManager
 
     public ServiceManager(IRepositoryManager repositoryManager, ILoggerService loggerService)
     {
-        _bookService = new Lazy<IBookService>(() => new BookManager(repositoryManager, loggerService));
+        _bookService = new Lazy<IBookService>(() => new BookManager(repositoryManager));
     }
 
     public IBookService BookService => _bookService.Value;
