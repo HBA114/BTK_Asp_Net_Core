@@ -1,3 +1,4 @@
+using Entities.Dtos;
 using Entities.Models;
 
 using Microsoft.AspNetCore.JsonPatch;
@@ -39,9 +40,9 @@ public class BooksController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateOneBook([FromRoute] int id, [FromBody] Book book)
+    public IActionResult UpdateOneBook([FromRoute] int id, [FromBody] BookDtoForUpdate bookDtoForUpdate)
     {
-        _manager.BookService.UpdateOneBook(id, book, true);
+        _manager.BookService.UpdateOneBook(id, bookDtoForUpdate, true);
 
         return NoContent();
     }
@@ -61,7 +62,8 @@ public class BooksController : ControllerBase
         var entity = _manager.BookService.GetOneBookById(id, true);
 
         bookPatch.ApplyTo(entity);
-        _manager.BookService.UpdateOneBook(id, entity, true);
+        _manager.BookService.UpdateOneBook(id,
+            new BookDtoForUpdate(entity.Id, entity.Title, entity.Price), true);
 
         return NoContent();
     }

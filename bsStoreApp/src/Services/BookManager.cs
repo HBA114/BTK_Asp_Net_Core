@@ -1,3 +1,6 @@
+using AutoMapper;
+
+using Entities.Dtos;
 using Entities.Exceptions;
 using Entities.Models;
 
@@ -10,10 +13,12 @@ namespace Services;
 public class BookManager : IBookService
 {
     private readonly IRepositoryManager _manager;
+    private readonly IMapper _mapper;
 
-    public BookManager(IRepositoryManager manager)
+    public BookManager(IRepositoryManager manager, IMapper mapper)
     {
         _manager = manager;
+        _mapper = mapper;
     }
 
     public Book CreateOneBook(Book book)
@@ -45,12 +50,11 @@ public class BookManager : IBookService
         return entity;
     }
 
-    public void UpdateOneBook(int id, Book book, bool trackChanges)
+    public void UpdateOneBook(int id, BookDtoForUpdate bookDtoForUpdate, bool trackChanges)
     {
         var entity = GetOneBookById(id, trackChanges);
 
-        entity.Title = book.Title;
-        entity.Price = book.Price;
+        entity = _mapper.Map<Book>(bookDtoForUpdate);
 
         _manager.Book.UpdateOneBook(entity); // if entity tracking is true, save will update without needing this line
         _manager.Save();
