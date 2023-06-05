@@ -7,9 +7,10 @@ namespace WebAPI.Utilities.AutoMapper;
 
 public class MappingProfile : Profile
 {
-    public MappingProfile() 
+    public MappingProfile()
     {
         CreateMap<Book, BookDtoForUpdate>().ReverseMap();
+        CreateMap<Book, BookDto>().ReverseMap();
     }
-    
+
 }
