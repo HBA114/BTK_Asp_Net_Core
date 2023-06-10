@@ -94,3 +94,5 @@
 2023-06-05 16:37:06.4338 Info Message Template Auto Format enabled
 2023-06-05 16:37:06.5132 Info Registered target NLog.Targets.FileTarget(Name=logfile)
 2023-06-05 16:37:06.5416 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=/home/hbasri/Documents/Programming/dotnet-Projects/BTK_Asp_Net_Core/bsStoreApp/src/WebAPI/nlog.config
+2023-06-05 16:51:16.1053 Info AppDomain Shutting down. LogFactory closing...
+2023-06-05 16:51:16.1136 Info LogFactory has been closed.

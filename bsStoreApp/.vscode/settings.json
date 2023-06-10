@@ -20,5 +20,6 @@
         "Newtonsoft",
         "nlog"
     ],
-    "dotnet-test-explorer.testProjectPath": "./tests/*Test*"
+    "dotnet-test-explorer.testProjectPath": "./tests/*Test*",
+    "dotnet.defaultSolution": "bsStoreApp.sln"
 }
