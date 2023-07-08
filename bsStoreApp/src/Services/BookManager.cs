@@ -21,54 +21,54 @@ public class BookManager : IBookService
         _mapper = mapper;
     }
 
-    public BookDto CreateOneBook(BookDtoForInsertion bookDtoForInsertion)
+    public async Task<BookDto> CreateOneBookAsync(BookDtoForInsertion bookDtoForInsertion)
     {
         Book book = _mapper.Map<Book>(bookDtoForInsertion);
         _manager.Book.CreateOneBook(book);
-        _manager.Save();
+        await _manager.SaveAsync();
         return _mapper.Map<BookDto>(book);
     }
 
-    public async void DeleteOneBook(int id, bool trackChanges)
+    public async Task DeleteOneBookAsync(int id, bool trackChanges)
     {
-        var book = GetBookWithIdOrThrowException(id, trackChanges);
+        var book = await GetBookWithIdOrThrowException(id, trackChanges);
 
         _manager.Book.DeleteOneBook(book);
-        _manager.Save();
+        await _manager.SaveAsync();
     }
 
-    public IEnumerable<BookDto> GetAllBooks(bool trackChanges)
+    public async Task<IEnumerable<BookDto>> GetAllBooksAsync(bool trackChanges)
     {
-        var books = _manager.Book.GetAllBooks(trackChanges);
+        var books = await _manager.Book.GetAllBooksAsync(trackChanges);
         var mappedBooks = _mapper.Map<IEnumerable<BookDto>>(books);
         return mappedBooks;
     }
 
-    public BookDto GetOneBookById(int id, bool trackChanges)
+    public async Task<BookDto> GetOneBookByIdAsync(int id, bool trackChanges)
     {
-        var book = GetBookWithIdOrThrowException(id, trackChanges);
+        var book = await GetBookWithIdOrThrowException(id, trackChanges);
 
         return _mapper.Map<BookDto>(book);
     }
 
-    public (BookDtoForUpdate bookDtoForUpdate, Book book) GetOneBookForPatch(int id, bool trackChanges)
+    public async Task<(BookDtoForUpdate bookDtoForUpdate, Book book)> GetOneBookForPatchAsync(int id, bool trackChanges)
     {
-        var book = GetBookWithIdOrThrowException(id, trackChanges);
+        var book = await GetBookWithIdOrThrowException(id, trackChanges);
 
         var bookDtoForUpdate = _mapper.Map<BookDtoForUpdate>(book);
 
         return (bookDtoForUpdate, book);
     }
 
-    public void SaveChangesForPatch(BookDtoForUpdate bookDtoForUpdate, Book book)
+    public async Task SaveChangesForPatchAsync(BookDtoForUpdate bookDtoForUpdate, Book book)
     {
         _mapper.Map(bookDtoForUpdate, book);
-        _manager.Save();
+        await _manager.SaveAsync();
     }
 
-    public void UpdateOneBook(int id, BookDtoForUpdate bookDtoForUpdate, bool trackChanges)
+    public async Task UpdateOneBookAsync(int id, BookDtoForUpdate bookDtoForUpdate, bool trackChanges)
     {
-        var book = GetBookWithIdOrThrowException(id, trackChanges);
+        var book = await GetBookWithIdOrThrowException(id, trackChanges);
 
         // entity = _mapper.Map<Book>(bookDtoForUpdate);    //! using this line causes:
         //! 500
@@ -78,12 +78,12 @@ public class BookManager : IBookService
         book.Price = bookDtoForUpdate.Price;
 
         _manager.Book.UpdateOneBook(book); // if entity tracking is true, save will update without needing this line
-        _manager.Save();
+        await _manager.SaveAsync();
     }
 
-    private Book GetBookWithIdOrThrowException(int id, bool trackChanges)
+    private async Task<Book> GetBookWithIdOrThrowException(int id, bool trackChanges)
     {
-        var book = _manager.Book.GetBookById(id, trackChanges);
+        var book = await _manager.Book.GetBookByIdAsync(id, trackChanges);
 
         if (book is null)
             throw new BookNotFoundException(id);
