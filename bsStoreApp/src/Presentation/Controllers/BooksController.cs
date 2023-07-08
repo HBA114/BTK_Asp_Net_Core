@@ -28,6 +28,10 @@ public class BooksController : ControllerBase
     [HttpPost]
     public IActionResult CreateOneBook([FromBody] BookDtoForInsertion bookDtoForInsertion)
     {
+        if (!ModelState.IsValid)
+        {
+            return UnprocessableEntity(ModelState);
+        }
         return StatusCode(201, _manager.BookService.CreateOneBook(bookDtoForInsertion));
     }
 
