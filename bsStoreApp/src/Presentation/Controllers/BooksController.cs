@@ -19,13 +19,13 @@ public class BooksController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllBooks()
+    public async Task<IActionResult> GetAllBooksAsync()
     {
         return Ok(await _manager.BookService.GetAllBooksAsync(false));
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateOneBook([FromBody] BookDtoForInsertion bookDtoForInsertion)
+    public async Task<IActionResult> CreateOneBookAsync([FromBody] BookDtoForInsertion bookDtoForInsertion)
     {
         if (bookDtoForInsertion is null) 
             return BadRequest();    // 400
@@ -37,7 +37,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetOneBook([FromRoute] int id)
+    public async Task<IActionResult> GetOneBookAsync([FromRoute] int id)
     {
         var book = await _manager.BookService.GetOneBookByIdAsync(id, false);
 
@@ -45,7 +45,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateOneBook([FromRoute] int id, [FromBody] BookDtoForUpdate bookDtoForUpdate)
+    public async Task<IActionResult> UpdateOneBookAsync([FromRoute] int id, [FromBody] BookDtoForUpdate bookDtoForUpdate)
     {
         if (bookDtoForUpdate is null)
             return BadRequest();    // 400
@@ -59,7 +59,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteOneBook([FromRoute] int id)
+    public async Task<IActionResult> DeleteOneBookAsync([FromRoute] int id)
     {
         await _manager.BookService.DeleteOneBookAsync(id, false);
 
@@ -67,7 +67,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpPatch("{id}")]
-    public async Task<IActionResult> PartiallyUpdateOneBook([FromRoute] int id,
+    public async Task<IActionResult> PartiallyUpdateOneBookAsync([FromRoute] int id,
         [FromBody] JsonPatchDocument<BookDtoForUpdate> bookPatch)
     {
         if (bookPatch is null) 
