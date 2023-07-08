@@ -26,9 +26,9 @@ public class BooksController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CreateOneBook([FromBody] Book book)
+    public IActionResult CreateOneBook([FromBody] BookDtoForInsertion bookDtoForInsertion)
     {
-        return StatusCode(201, _manager.BookService.CreateOneBook(book));
+        return StatusCode(201, _manager.BookService.CreateOneBook(bookDtoForInsertion));
     }
 
     [HttpGet("{id}")]
@@ -57,20 +57,15 @@ public class BooksController : ControllerBase
 
     [HttpPatch("{id}")]
     public IActionResult PartiallyUpdateOneBook([FromRoute] int id,
-        [FromBody] JsonPatchDocument<Book> bookPatch)
+        [FromBody] JsonPatchDocument<BookDto> bookPatch)
     {
-        var entity = _manager.BookService.GetOneBookById(id, true);
+        var bookDto = _manager.BookService.GetOneBookById(id, true);
 
-        bookPatch.ApplyTo(entity);
+        bookPatch.ApplyTo(bookDto);
         // _manager.BookService.UpdateOneBook(id,
         //     new BookDtoForUpdate(entity.Id, entity.Title, entity.Price), true);
         _manager.BookService.UpdateOneBook(id,
-            new BookDtoForUpdate()
-            {
-                Id = entity.Id,
-                Title = entity.Title,
-                Price = entity.Price
-            }, true);
+            new BookDtoForUpdate(bookDto.Id, bookDto.Title, bookDto.Price), true);
 
         return NoContent();
     }
