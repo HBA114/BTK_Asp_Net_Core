@@ -1,5 +1,4 @@
 using Entities.Dtos;
-using Entities.Models;
 
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
