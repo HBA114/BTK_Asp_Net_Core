@@ -62,8 +62,15 @@ public class BooksController : ControllerBase
         var entity = _manager.BookService.GetOneBookById(id, true);
 
         bookPatch.ApplyTo(entity);
+        // _manager.BookService.UpdateOneBook(id,
+        //     new BookDtoForUpdate(entity.Id, entity.Title, entity.Price), true);
         _manager.BookService.UpdateOneBook(id,
-            new BookDtoForUpdate(entity.Id, entity.Title, entity.Price), true);
+            new BookDtoForUpdate()
+            {
+                Id = entity.Id,
+                Title = entity.Title,
+                Price = entity.Price
+            }, true);
 
         return NoContent();
     }
