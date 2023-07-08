@@ -31,9 +31,9 @@ public class BookManager : IBookService
 
     public async void DeleteOneBook(int id, bool trackChanges)
     {
-        var entity = _manager.Book.GetBookById(id, trackChanges);
+        var book = GetBookWithIdOrThrowException(id, trackChanges);
 
-        _manager.Book.DeleteOneBook(entity);
+        _manager.Book.DeleteOneBook(book);
         _manager.Save();
     }
 
@@ -46,25 +46,48 @@ public class BookManager : IBookService
 
     public BookDto GetOneBookById(int id, bool trackChanges)
     {
-        var entity = _manager.Book.GetBookById(id, trackChanges);
-        if (entity is null)
-            throw new BookNotFoundException(id);
+        var book = GetBookWithIdOrThrowException(id, trackChanges);
 
-        return _mapper.Map<BookDto>(entity);
+        return _mapper.Map<BookDto>(book);
+    }
+
+    public (BookDtoForUpdate bookDtoForUpdate, Book book) GetOneBookForPatch(int id, bool trackChanges)
+    {
+        var book = GetBookWithIdOrThrowException(id, trackChanges);
+
+        var bookDtoForUpdate = _mapper.Map<BookDtoForUpdate>(book);
+
+        return (bookDtoForUpdate, book);
+    }
+
+    public void SaveChangesForPatch(BookDtoForUpdate bookDtoForUpdate, Book book)
+    {
+        _mapper.Map(bookDtoForUpdate, book);
+        _manager.Save();
     }
 
     public void UpdateOneBook(int id, BookDtoForUpdate bookDtoForUpdate, bool trackChanges)
     {
-        var entity = _manager.Book.GetBookById(id, trackChanges);
+        var book = GetBookWithIdOrThrowException(id, trackChanges);
 
         // entity = _mapper.Map<Book>(bookDtoForUpdate);    //! using this line causes:
         //! 500
         //! Error Message:  The instance of entity type 'Book' cannot be tracked because another instance with the same key value for {'Id'} is already being tracked. When attaching existing entities, ensure that only one entity instance with a given key value is attached. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see the conflicting key values.
 
-        entity.Title = bookDtoForUpdate.Title;
-        entity.Price = bookDtoForUpdate.Price;
+        book.Title = bookDtoForUpdate.Title;
+        book.Price = bookDtoForUpdate.Price;
 
-        _manager.Book.UpdateOneBook(entity); // if entity tracking is true, save will update without needing this line
+        _manager.Book.UpdateOneBook(book); // if entity tracking is true, save will update without needing this line
         _manager.Save();
+    }
+
+    private Book GetBookWithIdOrThrowException(int id, bool trackChanges)
+    {
+        var book = _manager.Book.GetBookById(id, trackChanges);
+
+        if (book is null)
+            throw new BookNotFoundException(id);
+        
+        return book;
     }
 }
