@@ -3,6 +3,8 @@ using Entities.Dtos;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
+using Presentation.ActionFilters;
+
 using Services.Contracts;
 
 namespace Presentation.Controllers;
@@ -24,16 +26,13 @@ public class BooksController : ControllerBase
         return Ok(await _manager.BookService.GetAllBooksAsync(false));
     }
 
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     [HttpPost]
     public async Task<IActionResult> CreateOneBookAsync([FromBody] BookDtoForInsertion bookDtoForInsertion)
     {
-        if (bookDtoForInsertion is null) 
-            return BadRequest();    // 400
+        var book = await _manager.BookService.CreateOneBookAsync(bookDtoForInsertion);
 
-        if (!ModelState.IsValid)
-            return UnprocessableEntity(ModelState); // 422
-
-        return StatusCode(201, await _manager.BookService.CreateOneBookAsync(bookDtoForInsertion));
+        return StatusCode(201, book);
     }
 
     [HttpGet("{id}")]
@@ -70,9 +69,9 @@ public class BooksController : ControllerBase
     public async Task<IActionResult> PartiallyUpdateOneBookAsync([FromRoute] int id,
         [FromBody] JsonPatchDocument<BookDtoForUpdate> bookPatch)
     {
-        if (bookPatch is null) 
+        if (bookPatch is null)
             return BadRequest();    // 400
-        
+
         var result = await _manager.BookService.GetOneBookForPatchAsync(id, false);
 
         bookPatch.ApplyTo(result.bookDtoForUpdate, ModelState);

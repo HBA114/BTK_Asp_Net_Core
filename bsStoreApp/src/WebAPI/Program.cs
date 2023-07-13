@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 
 using NLog;
 
+using Presentation.ActionFilters;
+
 using Services.Contracts;
 
 using WebAPI.Extensions;
@@ -20,6 +22,8 @@ builder.Services.AddControllers(config =>
     .AddXmlDataContractSerializerFormatters()
     .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly)
     .AddNewtonsoftJson();
+
+builder.Services.AddScoped<ValidationFilterAttribute>();    // IOC - Inversion of Control
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
