@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/WebAPI/WebAPI.csproj",
+                "${workspaceFolder}/src/WebAPI/WebAPI.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/WebAPI/WebAPI.csproj",
+                "${workspaceFolder}/src/WebAPI/WebAPI.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,32 +33,9 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/WebAPI/WebAPI.csproj"
+                "${workspaceFolder}/src/WebAPI/WebAPI.csproj"
             ],
             "problemMatcher": "$msCompile"
-        },
-        {
-            "label": ".NET Core Test with debugger",
-            "type": "process",
-            "isBackground": true,
-            "command": "dotnet",
-            "args": [
-                "test"
-            ],
-            "options": {
-                "cwd": "${workspaceFolder}/tests/UnitTests",
-                "env": {
-                    "VSTEST_HOST_DEBUG": "1"
-                },
-            },
-            "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "problemMatcher": []
-        },
+        }
     ]
 }
