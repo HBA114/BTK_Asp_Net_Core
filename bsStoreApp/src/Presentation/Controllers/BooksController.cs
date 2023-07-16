@@ -9,6 +9,7 @@ using Services.Contracts;
 
 namespace Presentation.Controllers;
 
+[ServiceFilter(typeof(LogFilterAttribute))]
 [ApiController]
 [Route("api/[controller]")]
 public class BooksController : ControllerBase
